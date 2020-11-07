@@ -1,0 +1,8 @@
+<div *ngIf="twits$">
+    <ul class="twits">
+        <li *ngFor="let twit of twits$ | async">
+            <span>{{twit.twit}}</span> by {{twit.writer.name}}
+        </li>
+    </ul>
+</div>
+<div> Cannot fetch twits for some reason</div>

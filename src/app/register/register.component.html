@@ -1,0 +1,9 @@
+<div>
+    <label>Email: 
+        <input #email/>
+    </label>
+    <label>Password: 
+        <input #password/>
+    </label>
+    <button (click)="register({email: email.value, password: password.value}); email.value=''; password.value=''"> Register</button>
+</div>
