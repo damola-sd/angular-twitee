@@ -14,7 +14,10 @@ export class PostTwitComponent implements OnInit {
 
   isLoggedIn = '';
 
-  constructor(private store: Store, private router: Router) { }
+  constructor(private store: Store, private router: Router) { 
+    this.isLoggedIn = this.store.selectSnapshot(TwiteeState.token);
+
+  }
 
   post(data: Twit) {
     this.isLoggedIn = this.store.selectSnapshot(TwiteeState.token);

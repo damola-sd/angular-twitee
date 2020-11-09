@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Auth } from '../auth';
 import { Register } from '../state/twitee.actions';
+import { TwiteeState } from '../state/twitee.state';
 
 
 @Component({
@@ -11,14 +12,19 @@ import { Register } from '../state/twitee.actions';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
-  constructor(private store: Store, private router: Router ) { }
-  
-  register(data: Auth) {
-    this.store.dispatch(new Register(data));
-    this.router.navigate([""]);
+
+  public loggedIn;
+  constructor(private store: Store, private router: Router) {
+    this.loggedIn = this.store.selectSnapshot(TwiteeState.isAuthenticated);
   }
-  
+
+  register(data: Auth) {
+    this.store.dispatch(new Register(data)).subscribe(() => {
+      this.router.navigate([""]);
+
+    })
+  }
+
   ngOnInit(): void {
   }
 
