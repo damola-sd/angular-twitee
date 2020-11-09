@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { Auth } from '../auth';
 import { Register } from '../state/twitee.actions';
 import { TwiteeState } from '../state/twitee.state';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -14,7 +15,10 @@ import { TwiteeState } from '../state/twitee.state';
 export class RegisterComponent implements OnInit {
 
   public loggedIn;
-  constructor(private store: Store, private router: Router) {
+  registerForm:  FormGroup;
+  submitted = false;
+
+  constructor(private store: Store, private router: Router, private formBuilder: FormBuilder) {
     this.loggedIn = this.store.selectSnapshot(TwiteeState.isAuthenticated);
   }
 
@@ -25,7 +29,29 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+
+
   ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    }) 
   }
+   get f() { return this.registerForm.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.registerForm.invalid) {
+            return;
+        }
+
+        // display form values on success
+        this.register(this.registerForm.value);
+        this.submitted = false;
+        this.registerForm.reset();
+    }
+
 
 }
