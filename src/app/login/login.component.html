@@ -13,19 +13,44 @@
 <div>Token: {{tokenTest}}</div> -->
 <app-navbar></app-navbar>
 <div fxLayoutAlign="center center" fxFlexFill class="form-div">
-    <mat-card fxFlex="35">
-        <mat-toolbar color="primary">Login</mat-toolbar>
-        <form fxLayoutAlign="stretch" fxLayout="column" class="auth-form">
-            <mat-form-field >
-              <input matInput  #email placeholder="Email" >
-            </mat-form-field>
-          
-            <mat-form-field>
-              <input matInput #password type = "password" placeholder="Password" >
-            </mat-form-field>
-            <button (click)="login({email: email.value, password: password.value}); email.value=''; password.value=''" mat-raised-button type="submit">Login</button>
-          </form>
-          
-    </mat-card>
+  <mat-card fxFlex="35">
+    <mat-toolbar color="primary">Login</mat-toolbar>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="auth-form"
+    >
+      <mat-form-field>
+        <input matInput type="text" formControlName="email"
+        placeholder="Email" class="form-control" [ngClass]="{
+        'is-invalid': submitted && f.email.errors }">
+        <div *ngIf="submitted && f.email.errors">
+          <mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+          <mat-error *ngIf="f.email.errors.email">Must be a valid email address</mat-error
+          >
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          placeholder="Password"
+        >
+        <div *ngIf="submitted && f.email.errors" >
+          <mat-error *ngIf="f.password.errors.required"
+            >Password is required</mat-error
+          >
+          <mat-error *ngIf="f.password.errors.minlength"
+            >Password should be at least 8 characters long</mat-error
+          >
+        </div>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Login</button>
+    </form>
+  </mat-card>
 </div>
 
