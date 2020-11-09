@@ -13,18 +13,16 @@ import { TwiteeState } from '../state/twitee.state';
 })
 export class LoginComponent implements OnInit {
 
-  public tokenTest = '';
+  
   public loggedIn;
   constructor(private store: Store,private router: Router) { 
+    this.loggedIn = this.store.selectSnapshot(TwiteeState.isAuthenticated);
+
   }
 
   login(data: Auth) {
     this.store.dispatch(new Login(data)).subscribe(() =>{
-      this.tokenTest = this.store.selectSnapshot(TwiteeState.token);
-      this.loggedIn = this.store.selectSnapshot(TwiteeState.isAuthenticated);
       this.router.navigate([""]);
-
-
     })
   }
   
