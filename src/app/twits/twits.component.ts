@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FetchTwits } from '../state/twitee.actions';
+import { FetchTwits, RemoveTwit } from '../state/twitee.actions';
 import { TwiteeState } from '../state/twitee.state';
 import { Twit } from '../twitee';
 import { TwiteeServiceService } from '../twitee-service.service';
@@ -15,20 +16,32 @@ import { TwiteeServiceService } from '../twitee-service.service';
 export class TwitsComponent implements OnInit {
 
   @Select(TwiteeState.getTwits) twits$: Observable<Twit[]>;
+  loggedIn = ""
 
-  constructor( private store: Store, private data: TwiteeServiceService) { 
-    store.dispatch(new FetchTwits)
-    this.twits$.subscribe(res => {
-      console.log(res);
-    })
+  constructor( private store: Store, private data: TwiteeServiceService, private router: Router) { 
+    this.loggedIn = this.store.selectSnapshot(TwiteeState.token);
+    store.dispatch(new FetchTwits())
+    
   }
-  // getTwits(): 
+
+  delete(data: number) {
+    this.loggedIn = this.store.selectSnapshot(TwiteeState.token);
+    if (this.loggedIn) {
+      this.store.dispatch(new RemoveTwit(data)).subscribe(() => {
+        this.store.dispatch(new FetchTwits());
+      });
+    } else {
+      alert("You need to be logged in to delete a tweet");
+      this.router.navigate(['/login'])
+
+    }
+    
+    
+  }
+ 
 
   ngOnInit(): void {
-    // this.store.dispatch(new FetchTwits)
-  //   this.data.getTwits().subscribe((res: any) => {
-  //     console.log(res.data);
-  //   })
+  
   }
 
 }

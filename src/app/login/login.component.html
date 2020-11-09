@@ -1,9 +1,31 @@
-<div>
+<!-- <div>
     <label>Email: 
         <input #email/>
     </label>
     <label>Password: 
         <input #password/>
     </label>
-    <button (click)="login({email: email.value, password: password.value}); email.value=''; password.value=''"> Register</button>
+    <button (click)="login({email: email.value, password: password.value}); email.value=''; password.value=''"> Login</button>
 </div>
+
+<button (click)="logout()">Logout</button>
+<br>
+<div>Token: {{tokenTest}}</div> -->
+<app-navbar></app-navbar>
+<div fxLayoutAlign="center center" fxFlexFill class="form-div">
+    <mat-card fxFlex="35">
+        <mat-toolbar color="primary">Login</mat-toolbar>
+        <form fxLayoutAlign="stretch" fxLayout="column" class="auth-form">
+            <mat-form-field >
+              <input matInput  #email placeholder="Email" >
+            </mat-form-field>
+          
+            <mat-form-field>
+              <input matInput #password type = "password" placeholder="Password" >
+            </mat-form-field>
+            <button (click)="login({email: email.value, password: password.value}); email.value=''; password.value=''" mat-raised-button type="submit">Login</button>
+          </form>
+          
+    </mat-card>
+</div>
+

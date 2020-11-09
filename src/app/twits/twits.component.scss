@@ -1,0 +1,18 @@
+.twit {
+    margin: 1em;
+  
+
+}
+.twits-container {
+    background-color: #bebebe;
+
+}
+.twit-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+.delete {
+    cursor: pointer;
+    color: red;
+}

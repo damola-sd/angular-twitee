@@ -1,0 +1,10 @@
+<!-- <div>
+    <input #twit placeholder="Post twit"/>
+    <button (click)="post({twit: twit.value})">Post Twit</button>
+</div> -->
+<form fxLayoutAlign="stretch" fxLayout="column" >
+    <mat-form-field >
+        <input matInput  #twit placeholder="Post New Twit" >
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="post({twit: twit.value})" type="submit">Post</button>
+</form>

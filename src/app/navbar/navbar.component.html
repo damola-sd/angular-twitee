@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" class="nav-bar">
+    <div>Twitee</div>
+    <div class="links" *ngIf="!isLoggedIn; else notLoggedIn">
+      <a routerLink="/">Home</a>
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </div>
+    <ng-template #notLoggedIn>
+      <div class="links">
+        <a routerLink="/" (click)="logout()">Logout</a>
+      </div>
+    </ng-template>
+  </mat-toolbar>

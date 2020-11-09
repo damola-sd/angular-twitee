@@ -15,7 +15,7 @@ export class AddTwit {
 export class RemoveTwit {
     static readonly type = '[TWIT] Remove'
 
-    constructor(public payload: Twit) {}
+    constructor(public payload: number) {}
 }
 
 export class Register {
@@ -28,5 +28,9 @@ export class Login {
     static readonly type = '[Auth] Login'
 
     constructor(public payload: Auth) {}
+}
+
+export class Logout {
+    static readonly type = '[Auth] Logout'
 }
 

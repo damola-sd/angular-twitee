@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <label>Email: 
         <input #email/>
     </label>
@@ -6,4 +6,21 @@
         <input #password/>
     </label>
     <button (click)="register({email: email.value, password: password.value}); email.value=''; password.value=''"> Register</button>
+</div> -->
+<app-navbar></app-navbar>
+<div fxLayoutAlign="center center" fxFlexFill class="form-div">
+  <mat-card fxFlex="35">
+      <mat-toolbar color="primary">Register</mat-toolbar>
+      <form fxLayoutAlign="stretch" fxLayout="column" class="auth-form">
+          <mat-form-field >
+            <input matInput  #email placeholder="Email" >
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input matInput #password type = "password" placeholder="Password" >
+          </mat-form-field>
+          <button (click)="register({email: email.value, password: password.value}); email.value=''; password.value=''" mat-raised-button type="submit">Register</button>
+        </form>
+        
+  </mat-card>
 </div>

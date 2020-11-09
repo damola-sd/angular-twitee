@@ -1,8 +1,24 @@
-<div *ngIf="twits$">
+<!-- <div *ngIf="twits$">
     <ul class="twits">
         <li *ngFor="let twit of twits$ | async">
             <span>{{twit.twit}}</span> by {{twit.writer.name}}
+
+            <button (click)="delete(twit.id)">X</button>
         </li>
     </ul>
+</div> -->
+<app-navbar></app-navbar>
+<div fxLayoutAlign="center" fxFlexFill class="form-div" class="twits-container">
+  <mat-card fxFlex="60">
+    <app-post-twit></app-post-twit>
+    <div *ngIf="twits$">
+      <mat-card *ngFor="let twit of twits$ | async" class="twit">
+        <mat-card-title class="twit-container"
+          >{{ twit.twit }}
+          <mat-icon (click)="delete(twit.id)" class="delete">delete</mat-icon>
+        </mat-card-title>
+        <mat-card-subtitle>{{ twit.writer.name }} </mat-card-subtitle>
+      </mat-card>
+    </div>
+  </mat-card>
 </div>
-<div> Cannot fetch twits for some reason</div>

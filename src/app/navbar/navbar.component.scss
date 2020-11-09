@@ -1,0 +1,11 @@
+.nav-bar {
+    justify-content: space-between;
+
+}
+a {
+    padding-right: 1em;
+    color: white;
+    &:visited {
+        color: lightgray;
+    }
+}

@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+// import { Router } from '@angular/router';
+// import { Store } from '@ngxs/store';
+// import { Logout } from './state/twitee.actions';
+// import { TwiteeState } from './state/twitee.state';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-twitee';
+  isLoggedIn = '';
+
+  
+  constructor() {
+    
+  }
+
 }

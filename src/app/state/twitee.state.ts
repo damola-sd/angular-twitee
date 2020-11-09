@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Twit } from '../twitee';
-import { AddTwit, FetchTwits, RemoveTwit, Login, Register } from './twitee.actions';
+import { AddTwit, FetchTwits, RemoveTwit, Logout, Login, Register } from './twitee.actions';
 import { TwiteeServiceService } from '../twitee-service.service';
 import { AuthService } from '../auth.service';
 import { tap } from 'rxjs/operators';
@@ -32,10 +32,19 @@ export class TwiteeState {
         return state.twits
     }
 
+    @Selector()
+    static token(state: TwiteeStateModel) {
+        return state.token
+    }
+
+    static isAuthenticated(state: TwiteeStateModel) {
+        return state.loggedIn
+    }
+
+
     @Action(Register)
     register({ patchState}: StateContext<TwiteeStateModel>, { payload }) {
         return this.authService.register(payload).pipe(tap((res) => {
-            console.log(res);
             patchState({
                 token: res.token,
                 loggedIn: true
@@ -53,11 +62,17 @@ export class TwiteeState {
         }))
     };
 
+    @Action(Logout)
+    logout({ patchState }: StateContext<TwiteeStateModel>) {
+        patchState({
+            token: null,
+            loggedIn: false
+        })
+    };
+
     @Action(FetchTwits)
     fetchTwits({ patchState}: StateContext<TwiteeStateModel>) {
         return this.twitService.getTwits().pipe(tap((res) => {
-            console.log(res)
-            // const state = getState();
             patchState({
                 twits: res.data,
             });
@@ -66,9 +81,19 @@ export class TwiteeState {
 
     @Action(AddTwit)
     add({ getState, patchState }: StateContext<TwiteeStateModel>, { payload }: AddTwit) {
-        const state = getState();
-        patchState({ 
-            twits: [ ...state.twits, payload]
-        })
+        return this.twitService.addTwit(payload).pipe(tap(() => {
+            console.log('Added Twit')
+
+        }));
     }
+
+    @Action(RemoveTwit)
+    remove({ getState, patchState }: StateContext<TwiteeStateModel>, { payload }: RemoveTwit) {
+        return this.twitService.deleteTwit(payload).pipe(tap(() => {
+            console.log('Trying to delete twit')
+
+        }));
+    }
+
+    
 }
