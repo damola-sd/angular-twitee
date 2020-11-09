@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Twit } from './twitee'
 import { TwiteeStateModel, TwiteeState } from './state/twitee.state';
 import { Store } from '@ngxs/store';
+import { handleError } from './handleError';
 
 @Injectable({
   providedIn: 'root'
@@ -20,26 +21,13 @@ export class TwiteeServiceService {
   }
 
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error);
-
-      // log to console instead
-      window.alert(`${operation} failed: ${error.message}`);
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-
 
   getTwits() {
     return this.http.get<{ data: Twit[] }>(this.twitsUrl + "/api/twit")
     .pipe(
       tap(_ => console.log("Fetch Twits ")),
       catchError(
-        this.handleError<any>("Fetch Twits")
+        handleError<any>("Fetch Twits")
       )
     )
   }
@@ -56,12 +44,11 @@ export class TwiteeServiceService {
         token
       })
     };
-    console.log({ token });
     return this.http.post<{ data: Twit[] }>(this.twitsUrl + "/api/twit/new", payload, httpOtions)
       .pipe(
         tap(_ => console.log("Posting twit " + payload)),
         catchError(
-          this.handleError<any>("Post Twit")
+          handleError<any>("Post Twit")
         )
       )
   }
@@ -77,7 +64,7 @@ export class TwiteeServiceService {
       .pipe(
         tap(_ => console.log("Delete twit id " + payload)),
         catchError(
-          this.handleError<any>("Delete Twit")
+          handleError<any>("Delete Twit")
         )
       )
   }
